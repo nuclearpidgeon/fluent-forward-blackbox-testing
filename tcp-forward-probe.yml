@@ -1,0 +1,14 @@
+# config file for https://github.com/prometheus/blackbox_exporter
+modules:
+  fluent_forward_ackcheck:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      query_response:
+        -
+          # this is a msgpack message of the form:
+          #     ["probetag",[[1728021644, {}]],{"chunk":"p8n9gmxTQVC8/nh2wlKKeQ=="}]
+          send: "\x93\xA8probetag\x91\x92\xCE\x66\xFF\x84\x95\x80\x81\xA5chunk\xB8p8n9gmxTQVC8/nh2wlKKeQ=="
+        -
+          # Server should reply with an ack and the chunk if it received the message
+          expect: "\x81\xA3ack\xB8p8n9gmxTQVC8/nh2wlKKeQ=="
