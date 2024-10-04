@@ -10,6 +10,10 @@ if ! (which nc > /dev/null); then
     echo "ERROR: required CLI tool netcat (\`nc\`) not found"
     exit 1
 fi
+if ! (which xxd > /dev/null); then
+    echo "ERROR: required CLI tool \`xxd\` not found"
+    exit 1
+fi
 
 CTR_ID=$(docker run --rm --detach \
     -p 127.0.0.1:24224:24224 \
